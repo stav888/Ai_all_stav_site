@@ -577,38 +577,35 @@
     }
 
     .pricing-card {
-      background: linear-gradient(135deg, rgba(255,255,255,.07) 0%, rgba(255,255,255,.02) 100%);
+      background: linear-gradient(160deg, var(--panel) 0%, var(--bg2) 100%);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 36px 30px;
-      transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease);
       position: relative;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
     }
-    .pricing-card:hover { transform: translateY(-5px); box-shadow: 0 20px 56px rgba(0,0,0,.4); border-color: var(--border2); }
+    .pricing-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,.4); }
     .pricing-card.featured {
-      background: linear-gradient(135deg, rgba(255,255,255,.13) 0%, rgba(255,255,255,.06) 100%);
-      border-color: rgba(34,211,238,.3);
-      box-shadow: 0 8px 40px rgba(0,0,0,.3), 0 0 0 1px rgba(34,211,238,.15);
-      transform: scale(1.04);
+      background: linear-gradient(145deg, #1e2d58 0%, #111a3a 60%, #0d1530 100%);
+      border-color: rgba(180,156,255,.45);
+      box-shadow: 0 8px 40px rgba(0,0,0,.3), var(--glow-lilac);
     }
-    .pricing-card.featured:hover { transform: scale(1.04) translateY(-5px); box-shadow: 0 20px 56px rgba(0,0,0,.4), var(--glow-mint); }
+    .pricing-card.featured:hover { box-shadow: 0 16px 56px rgba(0,0,0,.4), var(--glow-lilac); }
 
     .pricing-badge {
       position: absolute;
       top: -13px;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--cyan);
-      color: #020c12;
+      background: linear-gradient(90deg, var(--lilac2), var(--lilac));
+      color: #160a38;
       font-size: 11px;
       font-weight: 700;
       padding: 4px 18px;
       border-radius: 99px;
       white-space: nowrap;
       letter-spacing: .5px;
-      box-shadow: 0 4px 14px rgba(34,211,238,.35);
+      box-shadow: 0 4px 12px rgba(180,156,255,.3);
     }
 
     .pricing-tier {
@@ -621,14 +618,14 @@
       margin-bottom: 14px;
     }
     .pricing-price {
-      font-size: 52px;
-      font-weight: 200;
+      font-size: 50px;
+      font-weight: 700;
       line-height: 1;
       margin-bottom: 8px;
       font-family: 'JetBrains Mono', monospace;
-      letter-spacing: -0.03em;
+      letter-spacing: -2px;
     }
-    .pricing-price sup { font-size: 20px; vertical-align: top; margin-top: 12px; display: inline-block; letter-spacing: 0; font-weight: 300; }
+    .pricing-price sup { font-size: 20px; vertical-align: top; margin-top: 10px; display: inline-block; letter-spacing: 0; }
     .pricing-price sub { font-size: 15px; color: var(--faint); font-weight: 400; font-family: 'Heebo', sans-serif; letter-spacing: 0; }
     .pricing-desc {
       font-size: 14px;
@@ -647,7 +644,7 @@
       font-size: 14px;
       color: var(--dim);
       padding: 9px 0;
-      border-bottom: 1px solid rgba(255,255,255,.05);
+      border-bottom: 1px solid rgba(30,43,72,.8);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -655,13 +652,13 @@
     .pricing-features li:last-child { border-bottom: none; }
     .pricing-features li::before {
       content: '✓';
-      color: var(--cyan);
+      color: var(--lilac);
       font-weight: 700;
       font-size: 11px;
       flex-shrink: 0;
       width: 18px;
       height: 18px;
-      background: rgba(34,211,238,.1);
+      background: rgba(180,156,255,.1);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -681,27 +678,24 @@
       font-size: 14px;
       font-weight: 600;
       transition: border-color .2s var(--ease), background .2s var(--ease), transform .15s var(--ease);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      background: var(--glass-bg);
+      backdrop-filter: blur(4px);
     }
-    .btn-outline:hover { border-color: rgba(34,211,238,.4); background: rgba(34,211,238,.07); transform: translateY(-1px); }
+    .btn-outline:hover { border-color: rgba(180,156,255,.4); background: rgba(180,156,255,.06); transform: translateY(-1px); }
 
     .btn-featured {
       display: block;
       text-align: center;
-      background: var(--cyan);
-      color: #020c12;
+      background: linear-gradient(135deg, var(--lilac2), var(--lilac));
+      color: #160a38;
       padding: 13px;
       border-radius: var(--radius-sm);
       text-decoration: none;
       font-size: 14px;
       font-weight: 700;
-      transition: filter .2s var(--ease), box-shadow .25s var(--ease), transform .15s var(--ease);
+      transition: box-shadow .25s var(--ease), transform .15s var(--ease);
       letter-spacing: .2px;
-      box-shadow: 0 6px 20px rgba(34,211,238,.3);
     }
-    .btn-featured:hover { filter: brightness(1.1); box-shadow: var(--glow-mint); transform: translateY(-1px); }
+    .btn-featured:hover { box-shadow: var(--glow-lilac); transform: translateY(-1px); }
 
     /* ── FAQ ── */
     #faq { background: var(--bg); }
@@ -980,6 +974,64 @@
       line-height: 1.7;
     }
     .callout strong { color: var(--cyan); }
+
+    /* ── Policy Checkbox ── */
+    .policy-check { margin-bottom: 24px; }
+    .checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 13.5px;
+      color: var(--dim);
+      line-height: 1.55;
+      text-transform: none;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+    .checkbox-label input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .checkbox-box {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border-radius: 5px;
+      border: 1.5px solid var(--border2);
+      background: rgba(255,255,255,.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+      transition: border-color .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+    }
+    .checkbox-box::after {
+      content: '';
+      width: 9px;
+      height: 5px;
+      border-left: 2px solid #020c12;
+      border-bottom: 2px solid #020c12;
+      transform: rotate(-45deg) scale(0);
+      transition: transform .15s var(--ease);
+      margin-top: -2px;
+    }
+    .checkbox-label input:checked ~ .checkbox-box {
+      background: var(--cyan);
+      border-color: var(--cyan);
+      box-shadow: 0 0 10px rgba(34,211,238,.3);
+    }
+    .checkbox-label input:checked ~ .checkbox-box::after { transform: rotate(-45deg) scale(1); }
+    .checkbox-label:hover .checkbox-box { border-color: var(--cyan); }
+    .policy-link {
+      color: var(--cyan);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: opacity .15s;
+    }
+    .policy-link:hover { opacity: .75; }
 
     /* ── Divider ── */
     .section-divider {
@@ -1382,6 +1434,13 @@
             <label for="message">ספרו לנו על העסק שלכם</label>
             <textarea id="message" placeholder="במה העסק עוסק, מה האתגר הנוכחי, ומה הייתם רוצים להשיג..."></textarea>
           </div>
+          <div class="form-group policy-check">
+            <label class="checkbox-label">
+              <input type="checkbox" id="policy" required />
+              <span class="checkbox-box"></span>
+              <span>קראתי ואני מסכים/מסכימה ל<a href="policy.html" target="_blank" class="policy-link">מדיניות הפרטיות</a> של האתר</span>
+            </label>
+          </div>
           <button type="submit" class="btn-submit">שליחת הפנייה ←</button>
         </form>
       </div>
@@ -1418,7 +1477,7 @@
     <div class="footer-col">
       <h4>משפטי</h4>
       <ul>
-        <li><a href="#">מדיניות פרטיות</a></li>
+        <li><a href="policy.html">מדיניות פרטיות</a></li>
         <li><a href="#">תנאי שימוש</a></li>
         <li><a href="#">נגישות</a></li>
         <li><a href="#">אבטחת מידע</a></li>

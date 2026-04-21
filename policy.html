@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מדיניות פרטיות — נקסוס AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #080c18;
+      --panel:  #0d1224;
+      --border: rgba(255,255,255,.08);
+      --ink:    #f0f4ff;
+      --dim:    rgba(240,244,255,.62);
+      --faint:  rgba(240,244,255,.35);
+      --cyan:   #22d3ee;
+      --lilac:  #b49cff;
+      --radius: 16px;
+      --ease:   cubic-bezier(.4,0,.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Heebo', sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      direction: rtl;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8,12,24,.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--cyan);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--lilac); }
+    .nav-back {
+      font-size: 14px;
+      color: var(--dim);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .15s var(--ease);
+    }
+    .nav-back:hover { color: var(--cyan); }
+
+    /* Content */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 72px 24px 96px;
+    }
+
+    .page-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 200;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .last-updated {
+      font-size: 13px;
+      color: var(--faint);
+      margin-bottom: 56px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .policy-section {
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .policy-section:last-child { border-bottom: none; }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2::before {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 20px;
+      background: var(--cyan);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    p {
+      font-size: 15px;
+      color: var(--dim);
+      margin-bottom: 14px;
+      line-height: 1.9;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      list-style: none;
+      margin: 12px 0 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    ul li {
+      font-size: 15px;
+      color: var(--dim);
+      padding-right: 20px;
+      position: relative;
+    }
+    ul li::before {
+      content: '·';
+      position: absolute;
+      right: 0;
+      color: var(--cyan);
+      font-size: 20px;
+      line-height: 1;
+      top: 2px;
+    }
+
+    a { color: var(--cyan); text-underline-offset: 3px; }
+    a:hover { opacity: .75; }
+
+    .highlight-box {
+      background: rgba(34,211,238,.05);
+      border: 1px solid rgba(34,211,238,.15);
+      border-right: 3px solid var(--cyan);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 14px;
+      color: var(--dim);
+      margin-top: 20px;
+    }
+    .highlight-box strong { color: var(--cyan); }
+
+    /* Footer */
+    .page-footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--faint);
+    }
+    .page-footer a { color: var(--cyan); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 16px; }
+      main { padding: 48px 20px 72px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">נקסוס<span>AI</span></a>
+  <a class="nav-back" href="index.html">→ חזרה לאתר הראשי</a>
+</nav>
+
+<main>
+  <div class="page-label">מסמך משפטי</div>
+  <h1>מדיניות פרטיות</h1>
+  <div class="last-updated">עדכון אחרון: אפריל 2026</div>
+
+  <div class="policy-section">
+    <h2>כללי</h2>
+    <p>נקסוס AI ("החברה", "אנחנו") מחויבת להגן על פרטיות המשתמשים באתר <strong>nexsusai.co.il</strong> ובכל השירותים הנלווים לו.</p>
+    <p>מדיניות זו מסבירה אילו מידע אנו אוספים, כיצד אנו משתמשים בו, ומה הזכויות שלכם בנוגע למידע זה. השימוש באתר ובשירותים שלנו מהווה הסכמה למדיניות זו.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>מידע שאנו אוספים</h2>
+    <p>אנו אוספים מידע שאתם מוסרים לנו ישירות, לרבות:</p>
+    <ul>
+      <li>שם מלא וכתובת אימייל כאשר ממלאים את טופס יצירת הקשר</li>
+      <li>שם העסק וסוג השירות המבוקש</li>
+      <li>תכני הודעות שנשלחות דרך הטופס</li>
+      <li>מידע טכני בסיסי כגון כתובת IP, סוג דפדפן וזמן הגלישה</li>
+    </ul>
+    <div class="highlight-box"><strong>חשוב לדעת:</strong> אנחנו לא אוספים פרטי כרטיס אשראי או מידע פיננסי דרך האתר.</div>
+  </div>
+
+  <div class="policy-section">
+    <h2>כיצד אנו משתמשים במידע</h2>
+    <p>המידע שנאסף משמש אותנו אך ורק למטרות הבאות:</p>
+    <ul>
+      <li>מענה לפניות ויצירת קשר חוזרת</li>
+      <li>הכנת הצעות מחיר מותאמות אישית</li>
+      <li>שיפור השירות וחוויית המשתמש באתר</li>
+      <li>משלוח עדכונים רלוונטיים — אך ורק בהסכמה מפורשת</li>
+    </ul>
+    <p>אנו לא מוכרים, משכירים או משתפים את פרטיכם האישיים עם גורמים חיצוניים לצורכי שיווק.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>שמירת המידע</h2>
+    <p>המידע שנמסר דרך טפסי האתר נשמר בצורה מאובטחת ומוגנת. אנחנו שומרים את המידע רק כל עוד הוא נחוץ לצורך מתן השירות, ולא מעבר לכך.</p>
+    <p>אנו נוקטים אמצעי אבטחה טכניים ופרוצדורליים סבירים כדי להגן על המידע מפני גישה לא מורשית, אובדן או שינוי.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>עוגיות (Cookies)</h2>
+    <p>האתר עשוי להשתמש בעוגיות בסיסיות לצורכי ניתוח גלישה אנונימי (כגון Google Analytics). העוגיות אינן מזהות אתכם אישית.</p>
+    <p>באפשרותכם להשבית עוגיות דרך הגדרות הדפדפן שלכם בכל עת, אם כי הדבר עשוי להשפיע על חלק מהפונקציות.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>זכויותיכם</h2>
+    <p>בהתאם לחוק הגנת הפרטיות הישראלי, עומדות לכם הזכויות הבאות:</p>
+    <ul>
+      <li>לעיין במידע האישי שנשמר עליכם</li>
+      <li>לבקש תיקון של מידע שגוי</li>
+      <li>לבקש מחיקת המידע שלכם ממאגרינו</li>
+      <li>לבטל הסכמה לקבלת פניות שיווקיות בכל עת</li>
+    </ul>
+    <div class="highlight-box">לממש את זכויותיכם, פנו אלינו ב: <strong><a href="mailto:privacy@nexsusai.co.il">privacy@nexsusai.co.il</a></strong></div>
+  </div>
+
+  <div class="policy-section">
+    <h2>שינויים במדיניות</h2>
+    <p>אנו שומרים לעצמנו את הזכות לעדכן מדיניות זו מעת לעת. שינויים מהותיים יפורסמו בראש עמוד זה עם תאריך העדכון.</p>
+    <p>המשך השימוש באתר לאחר פרסום שינויים מהווה הסכמה למדיניות המעודכנת.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>צור קשר</h2>
+    <p>לכל שאלה בנוגע למדיניות הפרטיות שלנו:</p>
+    <ul>
+      <li>אימייל: <a href="mailto:privacy@nexsusai.co.il">privacy@nexsusai.co.il</a></li>
+      <li>דרך <a href="index.html#contact">טופס יצירת הקשר</a> באתר</li>
+    </ul>
+  </div>
+</main>
+
+<div class="page-footer">
+  © 2026 נקסוס AI — כל הזכויות שמורות &nbsp;·&nbsp; <a href="index.html">חזרה לאתר</a>
+</div>
+
+</body>
+</html>
