@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>נקסוס AI — פתרונות חכמים לעסקים מודרניים</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0b1020;
+      --bg2:       #0f1630;
+      --panel:     #131a36;
+      --panel2:    #1a2346;
+      --border:    #1e2d50;
+      --ink:       #e7ecff;
+      --dim:       #8aa0c0;
+      --faint:     #5a6a8a;
+      --mint:      #7cf4a3;
+      --mint2:     #4fd98a;
+      --lilac:     #b49cff;
+      --peach:     #ffb27a;
+      --pink:      #ff9ad1;
+      --sky:       #7ad6ff;
+      --amber:     #ffd76a;
+      --red:       #ff7a93;
+      --radius:    14px;
+      --radius-sm: 8px;
+      --glow-mint:  0 0 32px rgba(124,244,163,.18);
+      --glow-lilac: 0 0 32px rgba(180,156,255,.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Heebo', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      direction: rtl;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--panel2); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--faint); }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11,16,32,.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--mint);
+      letter-spacing: -0.5px;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--lilac); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      flex-direction: row-reverse;
+    }
+    .nav-links a {
+      color: var(--dim);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color .15s ease;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-cta {
+      background: var(--mint);
+      color: #0a1a12;
+      border: none;
+      padding: 9px 20px;
+      border-radius: var(--radius-sm);
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: box-shadow .2s ease, transform .15s ease;
+    }
+    .nav-cta:hover {
+      box-shadow: var(--glow-mint);
+      transform: translateY(-1px);
+    }
+
+    /* ── Hero ── */
+    #hero {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 700px 500px at 20% 40%, rgba(124,244,163,.07) 0%, transparent 70%),
+        radial-gradient(ellipse 600px 400px at 80% 30%, rgba(180,156,255,.08) 0%, transparent 70%),
+        radial-gradient(ellipse 400px 300px at 50% 80%, rgba(122,214,255,.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(124,244,163,.08);
+      border: 1px solid rgba(124,244,163,.2);
+      color: var(--mint);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 99px;
+      margin-bottom: 32px;
+    }
+    .hero-badge::before { content: '✦'; }
+
+    h1 {
+      font-size: clamp(38px, 6vw, 70px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+      max-width: 860px;
+    }
+    h1 .grad {
+      background: linear-gradient(135deg, var(--mint) 0%, var(--lilac) 50%, var(--sky) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--dim);
+      max-width: 600px;
+      margin-bottom: 48px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: var(--mint);
+      color: #0a1a12;
+      border: none;
+      padding: 14px 32px;
+      border-radius: var(--radius-sm);
+      font-family: 'Heebo', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: box-shadow .2s ease, transform .15s ease;
+      display: inline-block;
+    }
+    .btn-primary:hover { box-shadow: var(--glow-mint); transform: translateY(-2px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      padding: 14px 32px;
+      border-radius: var(--radius-sm);
+      font-family: 'Heebo', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s ease, background .2s ease, transform .15s ease;
+      display: inline-block;
+    }
+    .btn-secondary:hover {
+      border-color: var(--lilac);
+      background: rgba(180,156,255,.06);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 72px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat .num {
+      font-size: 32px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--mint);
+    }
+    .hero-stat .label {
+      font-size: 13px;
+      color: var(--dim);
+      margin-top: 4px;
+    }
+
+    /* ── Section Base ── */
+    section { padding: 96px 24px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--mint);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 16px;
+    }
+    .section-label::before { content: '✦'; }
+
+    h2 {
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 17px;
+      color: var(--dim);
+      max-width: 560px;
+      line-height: 1.8;
+      margin-bottom: 56px;
+    }
+
+    /* ── Services ── */
+    #services { background: var(--bg2); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; left: 0;
+      height: 2px;
+      background: var(--card-accent, var(--mint));
+      border-radius: var(--radius) var(--radius) 0 0;
+      opacity: 0;
+      transition: opacity .2s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--card-accent, var(--mint));
+      box-shadow: 0 8px 40px rgba(0,0,0,.3);
+    }
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .service-card h3 {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .service-card p {
+      font-size: 14px;
+      color: var(--dim);
+      line-height: 1.8;
+    }
+    .service-tag {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 99px;
+      background: rgba(124,244,163,.08);
+      color: var(--mint);
+      border: 1px solid rgba(124,244,163,.2);
+      letter-spacing: .5px;
+    }
+
+    /* ── About ── */
+    #about .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .about-text h2 { margin-bottom: 20px; }
+    .about-text p {
+      color: var(--dim);
+      margin-bottom: 16px;
+      line-height: 1.9;
+      font-size: 15px;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .about-stat {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .about-stat:hover { transform: translateY(-2px); border-color: var(--lilac); }
+    .about-stat .num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--lilac);
+    }
+    .about-stat .label {
+      font-size: 13px;
+      color: var(--dim);
+      margin-top: 6px;
+    }
+
+    /* ── Testimonials ── */
+    #testimonials { background: var(--bg2); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .testimonial-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--glow-lilac);
+    }
+
+    .stars {
+      color: var(--amber);
+      font-size: 15px;
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+    }
+    .testimonial-card blockquote {
+      font-size: 15px;
+      color: var(--dim);
+      line-height: 1.8;
+      font-style: normal;
+      margin-bottom: 24px;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--mint), var(--lilac));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #0a1a12;
+      flex-shrink: 0;
+    }
+    .author-info .name { font-size: 14px; font-weight: 600; }
+    .author-info .role { font-size: 12px; color: var(--faint); }
+
+    /* ── Pricing ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: transform .2s ease;
+      position: relative;
+    }
+    .pricing-card:hover { transform: translateY(-4px); }
+    .pricing-card.featured {
+      background: linear-gradient(160deg, #1a2650 0%, #131a36 100%);
+      border-color: rgba(180,156,255,.4);
+      box-shadow: var(--glow-lilac);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--lilac);
+      color: #1a0a40;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 16px;
+      border-radius: 99px;
+      white-space: nowrap;
+    }
+
+    .pricing-tier {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .pricing-price {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .pricing-price sup { font-size: 20px; vertical-align: top; margin-top: 8px; display: inline-block; }
+    .pricing-price sub { font-size: 16px; color: var(--dim); font-weight: 400; font-family: 'Heebo', sans-serif; }
+    .pricing-desc {
+      font-size: 14px;
+      color: var(--dim);
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+    .pricing-features li {
+      font-size: 14px;
+      color: var(--dim);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pricing-features li:last-child { border-bottom: none; }
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--mint);
+      font-weight: 700;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .pricing-features li.dim::before { content: '—'; color: var(--faint); }
+    .pricing-features li.dim { color: var(--faint); }
+
+    .btn-outline {
+      display: block;
+      text-align: center;
+      border: 1px solid var(--border);
+      color: var(--ink);
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    .btn-outline:hover { border-color: var(--mint); background: rgba(124,244,163,.06); }
+
+    .btn-featured {
+      display: block;
+      text-align: center;
+      background: var(--lilac);
+      color: #1a0a40;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 700;
+      transition: box-shadow .2s ease, transform .15s ease;
+    }
+    .btn-featured:hover { box-shadow: var(--glow-lilac); transform: translateY(-1px); }
+
+    /* ── FAQ ── */
+    #faq { background: var(--bg2); }
+    .faq-list { max-width: 720px; }
+
+    details {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: border-color .2s ease;
+    }
+    details[open] { border-color: rgba(124,244,163,.3); }
+
+    summary {
+      padding: 20px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '+';
+      font-size: 20px;
+      color: var(--mint);
+      font-weight: 400;
+      flex-shrink: 0;
+      transition: transform .2s ease;
+    }
+    details[open] summary::after { transform: rotate(45deg); }
+
+    .faq-body {
+      padding: 0 24px 20px;
+      font-size: 14px;
+      color: var(--dim);
+      line-height: 1.9;
+    }
+
+    /* ── Contact ── */
+    #contact .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .contact-info h2 { margin-bottom: 16px; }
+    .contact-info p {
+      color: var(--dim);
+      font-size: 15px;
+      line-height: 1.9;
+      margin-bottom: 32px;
+    }
+
+    .contact-items { display: flex; flex-direction: column; gap: 16px; }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 14px;
+      color: var(--dim);
+    }
+    .contact-item-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: rgba(124,244,163,.08);
+      border: 1px solid rgba(124,244,163,.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .contact-form {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px;
+    }
+
+    .form-group { margin-bottom: 20px; }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--dim);
+      margin-bottom: 8px;
+    }
+    input, textarea, select {
+      width: 100%;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--ink);
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+      resize: vertical;
+      direction: rtl;
+      text-align: right;
+    }
+    input::placeholder, textarea::placeholder { color: var(--faint); }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--mint);
+      box-shadow: 0 0 0 3px rgba(124,244,163,.08);
+    }
+    textarea { min-height: 120px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--mint);
+      color: #0a1a12;
+      border: none;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      font-family: 'Heebo', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: box-shadow .2s ease, transform .15s ease;
+    }
+    .btn-submit:hover { box-shadow: var(--glow-mint); transform: translateY(-1px); }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--panel);
+      border-top: 1px solid var(--border);
+      padding: 48px 40px 32px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .nav-logo { display: inline-block; margin-bottom: 16px; font-size: 20px; }
+    .footer-brand p { font-size: 14px; color: var(--dim); line-height: 1.8; max-width: 260px; }
+
+    .footer-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a {
+      font-size: 14px;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color .15s ease;
+    }
+    .footer-col a:hover { color: var(--mint); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-copy { font-size: 13px; color: var(--faint); }
+    .footer-socials { display: flex; gap: 12px; }
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      text-decoration: none;
+      color: var(--dim);
+      transition: border-color .2s ease, color .2s ease, transform .15s ease;
+    }
+    .social-icon:hover { border-color: var(--mint); color: var(--mint); transform: translateY(-2px); }
+
+    /* ── Callout ── */
+    .callout {
+      background: rgba(124,244,163,.05);
+      border: 1px solid rgba(124,244,163,.2);
+      border-right: 3px solid var(--mint);
+      border-left: none;
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      font-size: 14px;
+      color: var(--dim);
+      margin-top: 24px;
+    }
+    .callout strong { color: var(--mint); }
+
+    /* ── Divider ── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      #about .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      #contact .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 64px 20px; }
+      nav { padding: 0 16px; }
+      .hero-stats { gap: 28px; }
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">נקסוס<span>AI</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">שירותים</a></li>
+    <li><a href="#about">אודות</a></li>
+    <li><a href="#pricing">מחירים</a></li>
+    <li><a href="#faq">שאלות נפוצות</a></li>
+    <li><a href="#contact">צור קשר</a></li>
+  </ul>
+  <a class="nav-cta" href="#contact">התחל עכשיו</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-badge">פתרונות חכמים לעסקים מודרניים</div>
+  <h1>קחו את העסק שלכם קדימה עם <span class="grad">כלי AI</span> מתקדמים</h1>
+  <p class="hero-sub">אנחנו בונים, מטמיעים ומפעילים פתרונות בינה מלאכותית שחוסכים זמן, מגדילים מכירות ומעצימים את המותג שלכם — בלי סיבוך מיותר.</p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="#contact">קבל הצעת מחיר</a>
+    <a class="btn-secondary" href="#services">גלה את השירותים</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num">150+</div>
+      <div class="label">עסקים מרוצים</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">98%</div>
+      <div class="label">שביעות רצון לקוחות</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">3x</div>
+      <div class="label">גידול ממוצע במכירות</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">72h</div>
+      <div class="label">זמן השקה ממוצע</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-label">מה אנחנו עושים</div>
+    <h2>שלושה שירותים. תוצאות אמיתיות.</h2>
+    <p class="section-sub">בחרנו להתמקד בשלושה תחומים שבהם AI יכול לייצר ערך מיידי ומדיד לכל עסק.</p>
+
+    <div class="services-grid">
+
+      <!-- Service 1: Website Builder -->
+      <div class="service-card" style="--card-accent: var(--mint)">
+        <div class="service-icon" style="background:rgba(124,244,163,.1)">🌐</div>
+        <h3>בניית אתרים חכמה</h3>
+        <p>אנחנו בונים אתרים מקצועיים, מהירים ומותאמים לנייד — עם תוכן שנוצר חלקית בעזרת AI ועיצוב שמוכר. מהקונספט ועד האוויר בפחות מ-72 שעות.</p>
+        <span class="service-tag">פיתוח אתרים</span>
+      </div>
+
+      <!-- Service 2: AI WhatsApp Agent -->
+      <div class="service-card" style="--card-accent: var(--mint2)">
+        <div class="service-icon" style="background:rgba(79,217,138,.12)">💬</div>
+        <h3>סוכן WhatsApp חכם לעסקים</h3>
+        <p>בוט AI שמדבר עם הלקוחות שלכם בוואטסאפ — מענה על שאלות, קביעת פגישות, ושליחת הצעות מחיר — 24/7 בלי להפסיק לישון. אתם מרוויחים, הלקוח מרוצה.</p>
+        <span class="service-tag" style="background:rgba(79,217,138,.1);color:var(--mint2);border-color:rgba(79,217,138,.3)">WhatsApp AI</span>
+      </div>
+
+      <!-- Service 3: AI Logo -->
+      <div class="service-card" style="--card-accent: var(--lilac)">
+        <div class="service-icon" style="background:rgba(180,156,255,.1)">🎨</div>
+        <h3>לוגו AI לעסק שלך</h3>
+        <p>מותג חזק מתחיל בלוגו שזוכרים. אנחנו משלבים AI גנרטיבי עם מעצבים אנושיים כדי ליצור זהות ויזואלית ייחודית שמייצגת אתכם בדיוק — בזמן שיא ובמחיר שווה לכל נפש.</p>
+        <span class="service-tag" style="background:rgba(180,156,255,.08);color:var(--lilac);border-color:rgba(180,156,255,.25)">מיתוג AI</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-label">מי אנחנו</div>
+        <h2>טכנולוגיה שעובדת — לא רק מרשימה</h2>
+        <p>נקסוס AI היא קבוצת מומחים בבינה מלאכותית, פיתוח ועיצוב. אנחנו לא מוכרים באז-וורדז — אנחנו בונים מערכות שעובדות ביום-יום של העסק שלכם.</p>
+        <p>פעלנו עם עשרות עסקים ישראליים — מחנויות מקומיות ועד חברות SaaS — ועזרנו לכל אחד מהם לצמוח בצורה חכמה ויעילה יותר.</p>
+        <p>אנחנו מאמינים שכל עסק, בכל גודל, ראוי לגשת לכלי AI מהשורה הראשונה. לכן אנחנו עושים את זה נגיש, מהיר וברור.</p>
+        <div class="callout">
+          <strong>✦ הכרה עדכנית:</strong> דורגנו בין ספקי ה-AI המובילים לעסקים קטנים ובינוניים בישראל לשנת 2025.
+        </div>
+      </div>
+      <div class="about-stats">
+        <div class="about-stat">
+          <div class="num">4+</div>
+          <div class="label">שנות ניסיון ב-AI</div>
+        </div>
+        <div class="about-stat">
+          <div class="num">20+</div>
+          <div class="label">מומחים בצוות</div>
+        </div>
+        <div class="about-stat">
+          <div class="num">15</div>
+          <div class="label">תעשיות שונות</div>
+        </div>
+        <div class="about-stat">
+          <div class="num">∞</div>
+          <div class="label">תמיכה שוטפת</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-label">מה אומרים הלקוחות</div>
+    <h2>תוצאות שמדברות בעד עצמן</h2>
+    <p class="section-sub">לא מאמינים לנו? תשמעו ממי שכבר עובד איתנו.</p>
+
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>״האתר שבנו לנו נראה כמו של חברה גדולה פי עשרה ממה שאנחנו. תוך שבוע ראינו עלייה ברורה בפניות. שירות מעולה ותוצאה מדהימה.״</blockquote>
+        <div class="testimonial-author">
+          <div class="avatar">ד.כ</div>
+          <div class="author-info">
+            <div class="name">דנה כץ</div>
+            <div class="role">בעלת סטודיו לעיצוב שיער, תל אביב</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>״הסוכן בוואטסאפ שלהם מטפל בכ-80% מהפניות שלנו בצורה עצמאית. חסכנו שעות עבודה בשבוע ורמת השירות ללקוחות עלתה משמעותית.״</blockquote>
+        <div class="testimonial-author">
+          <div class="avatar" style="background:linear-gradient(135deg,var(--sky),var(--lilac))">ר.מ</div>
+          <div class="author-info">
+            <div class="name">רועי מזרחי</div>
+            <div class="role">מנהל שיווק, נדל"ן פרימיום</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>״הלוגו שקיבלנו עבר מעל הציפיות. תהליך מהיר, מקצועי ובמחיר הוגן. כבר הזמנו גם אתר ובוט וואטסאפ — ממליצה בחום!״</blockquote>
+        <div class="testimonial-author">
+          <div class="avatar" style="background:linear-gradient(135deg,var(--peach),var(--pink))">נ.ל</div>
+          <div class="author-info">
+            <div class="name">נועה לוי</div>
+            <div class="role">יזמית, מותג אופנה מקומי</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-label">מחירים</div>
+    <h2>שקוף. גמיש. ללא הפתעות.</h2>
+    <p class="section-sub">בחרו את החבילה שמתאימה לשלב שבו אתם נמצאים — ניתן לשדרג בכל עת.</p>
+
+    <div class="pricing-grid">
+
+      <!-- Starter -->
+      <div class="pricing-card">
+        <div class="pricing-tier">בסיסי</div>
+        <div class="pricing-price" style="color:var(--mint)">₪990<sub>/חד פעמי</sub></div>
+        <div class="pricing-desc">מושלם לעסקים שרוצים להתחיל חכם — לוגו + נוכחות דיגיטלית ראשונית.</div>
+        <ul class="pricing-features">
+          <li>לוגו AI + 3 וריאציות</li>
+          <li>דף נחיתה חד עמודי</li>
+          <li>עיצוב מותאם לנייד</li>
+          <li>תמיכה 30 יום</li>
+          <li class="dim">בוט WhatsApp</li>
+          <li class="dim">אתר מרובה עמודים</li>
+        </ul>
+        <a href="#contact" class="btn-outline">התחל עכשיו</a>
+      </div>
+
+      <!-- Growth (featured) -->
+      <div class="pricing-card featured">
+        <div class="pricing-badge">הכי פופולרי</div>
+        <div class="pricing-tier">צמיחה</div>
+        <div class="pricing-price" style="color:var(--lilac)">₪2,900<sub>/חד פעמי</sub></div>
+        <div class="pricing-desc">החבילה המלאה לעסקים שרוצים ליצור רושם ולייצר לידים מהיום הראשון.</div>
+        <ul class="pricing-features">
+          <li>לוגו AI + ערכת מותג</li>
+          <li>אתר עד 5 עמודים</li>
+          <li>בוט WhatsApp בסיסי</li>
+          <li>חיבור לגוגל / מפות</li>
+          <li>SEO בסיסי</li>
+          <li class="dim">אינטגרציות מתקדמות</li>
+        </ul>
+        <a href="#contact" class="btn-featured">התחל עכשיו</a>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pricing-card">
+        <div class="pricing-tier">מתקדם</div>
+        <div class="pricing-price" style="color:var(--peach)">בהתאמה</div>
+        <div class="pricing-desc">פתרון מלא ומותאם אישית — לעסקים שרוצים את הכל, ועוד קצת.</div>
+        <ul class="pricing-features">
+          <li>אתר מלא + CMS</li>
+          <li>בוט WhatsApp מתקדם</li>
+          <li>לוגו + מיתוג מלא</li>
+          <li>אינטגרציות CRM</li>
+          <li>אנליטיקס + דשבורד</li>
+          <li>תמיכה שוטפת ועדיפות</li>
+        </ul>
+        <a href="#contact" class="btn-outline">דבר איתנו</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-label">שאלות נפוצות</div>
+    <h2>יש לכם שאלות? יש לנו תשובות.</h2>
+    <p class="section-sub">כל מה שצריך לדעת לפני שמתחילים.</p>
+
+    <div class="faq-list">
+
+      <details>
+        <summary>כמה זמן לוקח לבנות אתר?</summary>
+        <div class="faq-body">רוב האתרים הבסיסיים עולים לאוויר תוך 48–72 שעות. אתרים מורכבים יותר עם עמודים מרובים ואינטגרציות לוקחים 5–10 ימי עסקים. אנחנו תמיד נגיד לכם מראש מה מציאותי.</div>
+      </details>
+
+      <details>
+        <summary>האם הבוט בוואטסאפ עובד גם בעברית?</summary>
+        <div class="faq-body">כן, בטבעיות מלאה. הבוט שלנו מאומן לשיח עסקי בעברית ומתאים עצמו לסגנון הדיבור של הלקוחות שלכם — כולל שפה יומיומית וסלנג.</div>
+      </details>
+
+      <details>
+        <summary>האם אני צריך ידע טכני כדי לנהל את האתר?</summary>
+        <div class="faq-body">ממש לא. אנחנו מספקים ממשק ניהול פשוט שגם מישהו שלא נגע אף פעם בקוד יכול להשתמש בו. ואם אתם מעדיפים — אנחנו מטפלים בהכל בשבילכם.</div>
+      </details>
+
+      <details>
+        <summary>מה קורה אם לא אוהב את הלוגו?</summary>
+        <div class="faq-body">אתם מקבלים 3 קונספטים שונים לבחירה, ועד 2 סיבובי תיקונים ללא עלות נוספת. המטרה שלנו היא שתהיו גאים במה שיצרנו יחד.</div>
+      </details>
+
+      <details>
+        <summary>האם אפשר לשלב את כל השירותים יחד?</summary>
+        <div class="faq-body">בהחלט — וזה בדיוק מה שממליצים על חבילת ה"צמיחה" או "המתקדם". השילוב בין אתר, לוגו ובוט מייצר חוויה עסקית מגובשת שמשאירה רושם.</div>
+      </details>
+
+      <details>
+        <summary>איך מתחילים את התהליך?</summary>
+        <div class="faq-body">פשוט מלאו את הטופס בתחתית הדף או שלחו לנו הודעה. ניצור קשר תוך יום עסקים, נשמע מה אתם צריכים ונגיש הצעה מותאמת — ללא עלות וללא התחייבות.</div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+
+      <div class="contact-info">
+        <div class="section-label">צור קשר</div>
+        <h2>בואו נבנה משהו ביחד</h2>
+        <p>ספרו לנו על העסק שלכם. הצוות שלנו יחזור אליכם תוך יום עסקים עם הצעה מותאמת — ללא התחייבות, ללא לחץ.</p>
+
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-item-icon">📧</div>
+            hello@nexusai.co.il
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📞</div>
+            050-000-0000
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            תל אביב-יפו — עובדים עם עסקים מכל הארץ
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">🕐</div>
+            ראשון–חמישי, 09:00–18:00
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <form onsubmit="return false;">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">שם פרטי</label>
+              <input type="text" id="fname" placeholder="ישראל" />
+            </div>
+            <div class="form-group">
+              <label for="lname">שם משפחה</label>
+              <input type="text" id="lname" placeholder="ישראלי" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">אימייל עסקי</label>
+            <input type="email" id="email" placeholder="israel@company.co.il" />
+          </div>
+          <div class="form-group">
+            <label for="company">שם העסק</label>
+            <input type="text" id="company" placeholder="העסק שלי בע״מ" />
+          </div>
+          <div class="form-group">
+            <label for="service">שירות מבוקש</label>
+            <select id="service">
+              <option value="" disabled selected>בחר שירות...</option>
+              <option>בניית אתר</option>
+              <option>סוכן WhatsApp AI</option>
+              <option>לוגו AI</option>
+              <option>חבילה מלאה</option>
+              <option>לא בטוח עדיין</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">ספרו לנו על העסק שלכם</label>
+            <textarea id="message" placeholder="במה העסק עוסק, מה האתגר הנוכחי, ומה הייתם רוצים להשיג..."></textarea>
+          </div>
+          <button type="submit" class="btn-submit">שליחת הפנייה ←</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="nav-logo" href="#">נקסוס<span>AI</span></a>
+      <p>פתרונות בינה מלאכותית לעסקים ישראליים. מהקונספט ועד הלקוח הבא שלכם.</p>
+    </div>
+    <div class="footer-col">
+      <h4>שירותים</h4>
+      <ul>
+        <li><a href="#services">בניית אתרים</a></li>
+        <li><a href="#services">בוט WhatsApp</a></li>
+        <li><a href="#services">לוגו AI</a></li>
+        <li><a href="#pricing">חבילות מחיר</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>חברה</h4>
+      <ul>
+        <li><a href="#about">אודות</a></li>
+        <li><a href="#">קריירה</a></li>
+        <li><a href="#">בלוג</a></li>
+        <li><a href="#contact">צור קשר</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>משפטי</h4>
+      <ul>
+        <li><a href="#">מדיניות פרטיות</a></li>
+        <li><a href="#">תנאי שימוש</a></li>
+        <li><a href="#">נגישות</a></li>
+        <li><a href="#">אבטחת מידע</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 נקסוס AI. כל הזכויות שמורות.</div>
+    <div class="footer-socials">
+      <a class="social-icon" href="#" title="LinkedIn">in</a>
+      <a class="social-icon" href="#" title="Instagram">📸</a>
+      <a class="social-icon" href="#" title="WhatsApp">💬</a>
+      <a class="social-icon" href="#" title="Facebook">f</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
