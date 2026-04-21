@@ -1453,13 +1453,18 @@
 (function() {
   var canvas = document.getElementById('hero-canvas');
   if (!canvas) return;
-  var gl = canvas.getContext('webgl');
+
+  // Skip on low-end / no-webgl devices
+  var gl = canvas.getContext('webgl', { antialias: false, powerPreference: 'low-power' });
   if (!gl) return;
+
+  // Cap pixel ratio at 1.5 to save GPU fill-rate on high-DPI mobile screens
+  var DPR = Math.min(window.devicePixelRatio || 1, 1.5);
 
   var vs = 'attribute vec2 aPos; void main(){gl_Position=vec4(aPos,0.,1.);}';
   var fs = [
-    'precision highp float;',
-    'uniform float iTime; uniform vec2 iRes;',
+    'precision mediump float;',   // mediump instead of highp — faster on mobile
+    'uniform float iTime; uniform vec2 iRes; uniform float iAspect;',
     'mat2 rot(float a){float c=cos(a),s=sin(a);return mat2(c,-s,s,c);}',
     'float vary(vec2 v1,vec2 v2,float s,float sp){return sin(dot(normalize(v1),normalize(v2))*s+iTime*sp)/100.;}',
     'vec3 ring(vec2 uv,vec2 c,float r,float w){',
@@ -1468,27 +1473,30 @@
     '  return vec3(smoothstep(r-w,r,l)-smoothstep(r,r+w,l));',
     '}',
     'void main(){',
+    // Correct aspect ratio so the circle stays circular on portrait mobile
     '  vec2 uv=gl_FragCoord.xy/iRes.xy;',
-    '  uv.x*=1.5; uv.x-=0.25;',
+    '  vec2 p=uv-0.5;',
+    '  p.x*=iAspect;',       // stretch x by aspect so ring is always round
+    '  p+=0.5;',
     '  float m=0.; vec2 c=vec2(.5);',
-    '  m+=ring(uv,c,.35,.035).r;',
-    '  m+=ring(uv,c,.332,.01).r;',
-    '  m+=ring(uv,c,.368,.005).r;',
-    '  vec2 v=rot(iTime)*uv;',
+    '  m+=ring(p,c,.35,.035).r;',
+    '  m+=ring(p,c,.332,.01).r;',
+    '  m+=ring(p,c,.368,.005).r;',
+    '  vec2 v=rot(iTime)*(uv-0.5);',
     '  vec3 fg=vec3(v.x*0.1+0.5,v.y*0.3+0.7,0.95-v.y*v.x*0.5);',
     '  vec3 col=mix(vec3(0.),fg,m);',
-    '  col=mix(col,vec3(1.),ring(uv,c,.35,.003).r);',
+    '  col=mix(col,vec3(1.),ring(p,c,.35,.003).r);',
     '  gl_FragColor=vec4(col,1.);',
     '}'
   ].join('\n');
 
-  function shader(type, src) {
+  function makeShader(type, src) {
     var s = gl.createShader(type);
     gl.shaderSource(s, src); gl.compileShader(s); return s;
   }
   var prog = gl.createProgram();
-  gl.attachShader(prog, shader(gl.VERTEX_SHADER, vs));
-  gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, fs));
+  gl.attachShader(prog, makeShader(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, makeShader(gl.FRAGMENT_SHADER, fs));
   gl.linkProgram(prog); gl.useProgram(prog);
 
   var buf = gl.createBuffer();
@@ -1498,22 +1506,49 @@
   gl.enableVertexAttribArray(aPos);
   gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
-  var tLoc = gl.getUniformLocation(prog, 'iTime');
-  var rLoc = gl.getUniformLocation(prog, 'iRes');
+  var tLoc   = gl.getUniformLocation(prog, 'iTime');
+  var rLoc   = gl.getUniformLocation(prog, 'iRes');
+  var aLoc   = gl.getUniformLocation(prog, 'iAspect');
+
+  var rafId, hidden = false;
 
   function resize() {
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    var w = canvas.offsetWidth;
+    var h = canvas.offsetHeight;
+    canvas.width  = Math.round(w * DPR);
+    canvas.height = Math.round(h * DPR);
     gl.viewport(0, 0, canvas.width, canvas.height);
   }
+
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 150);  // debounce resize
+  });
   resize();
-  window.addEventListener('resize', resize);
+
+  // Pause when tab is hidden (saves battery)
+  document.addEventListener('visibilitychange', function() {
+    hidden = document.hidden;
+    if (!hidden) requestAnimationFrame(loop);
+  });
+
+  // On mobile throttle to ~30 fps to reduce heat/battery drain
+  var isMobile = window.innerWidth <= 768;
+  var lastT = 0;
+  var interval = isMobile ? 33 : 0;  // ~30fps on mobile, uncapped on desktop
 
   function loop(t) {
+    if (hidden) return;
+    rafId = requestAnimationFrame(loop);
+    if (interval && t - lastT < interval) return;
+    lastT = t;
+
+    var aspect = canvas.width / canvas.height;
     gl.uniform1f(tLoc, t * 0.001);
     gl.uniform2f(rLoc, canvas.width, canvas.height);
+    gl.uniform1f(aLoc, aspect);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
-    requestAnimationFrame(loop);
   }
   requestAnimationFrame(loop);
 })();
