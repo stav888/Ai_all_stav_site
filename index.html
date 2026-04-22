@@ -1033,6 +1033,165 @@
     }
     .policy-link:hover { opacity: .75; }
 
+    /* ── Accessibility Widget ── */
+    #a11y-btn {
+      position: fixed;
+      bottom: 90px;
+      left: 20px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--cyan);
+      border: none;
+      cursor: pointer;
+      z-index: 998;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(34,211,238,.4);
+      transition: transform .2s var(--ease), box-shadow .2s var(--ease);
+      flex-shrink: 0;
+    }
+    #a11y-btn:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(34,211,238,.55); }
+    #a11y-btn img { width: 28px; height: 28px; display: block; }
+
+    #a11y-panel {
+      position: fixed;
+      bottom: 148px;
+      left: 20px;
+      width: 280px;
+      background: rgba(10,14,28,.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      padding: 20px;
+      z-index: 997;
+      box-shadow: 0 12px 48px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.06);
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+    }
+    #a11y-panel.open { display: flex; }
+
+    .a11y-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .a11y-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+    }
+    .a11y-row:last-child { border-bottom: none; }
+    .a11y-label {
+      font-size: 13px;
+      color: var(--dim);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .a11y-label svg { width: 15px; height: 15px; fill: var(--faint); flex-shrink: 0; }
+
+    /* Toggle switch */
+    .a11y-toggle {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    .a11y-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .a11y-slider {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,.1);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background .2s var(--ease);
+      border: 1px solid var(--border);
+    }
+    .a11y-slider::before {
+      content: '';
+      position: absolute;
+      width: 14px; height: 14px;
+      left: 3px; top: 2px;
+      background: var(--faint);
+      border-radius: 50%;
+      transition: transform .2s var(--ease), background .2s var(--ease);
+    }
+    .a11y-toggle input:checked + .a11y-slider { background: rgba(34,211,238,.25); border-color: rgba(34,211,238,.4); }
+    .a11y-toggle input:checked + .a11y-slider::before { transform: translateX(16px); background: var(--cyan); }
+
+    /* Font size stepper */
+    .a11y-stepper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .a11y-step-btn {
+      width: 24px; height: 24px;
+      border-radius: 6px;
+      border: 1px solid var(--border2);
+      background: rgba(255,255,255,.05);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, border-color .15s;
+      font-family: 'Heebo', sans-serif;
+    }
+    .a11y-step-btn:hover { background: rgba(34,211,238,.12); border-color: rgba(34,211,238,.35); }
+    .a11y-step-val { font-size: 12px; color: var(--dim); min-width: 28px; text-align: center; font-family: 'JetBrains Mono', monospace; }
+
+    /* Reset button */
+    .a11y-reset {
+      margin-top: 10px;
+      width: 100%;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--faint);
+      font-family: 'Heebo', sans-serif;
+      font-size: 12px;
+      padding: 7px;
+      cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+    .a11y-reset:hover { border-color: var(--border2); color: var(--dim); }
+
+    /* Applied accessibility classes */
+    body.a11y-big-text { font-size: 20px !important; }
+    body.a11y-big-text h1 { font-size: clamp(44px, 7vw, 92px) !important; }
+    body.a11y-big-text h2 { font-size: clamp(32px, 5vw, 60px) !important; }
+    body.a11y-high-contrast {
+      --ink: #ffffff !important;
+      --dim: rgba(255,255,255,.9) !important;
+      --faint: rgba(255,255,255,.7) !important;
+      --bg: #000000 !important;
+      --bg2: #0a0a0a !important;
+      --border: rgba(255,255,255,.3) !important;
+      --border2: rgba(255,255,255,.5) !important;
+    }
+    body.a11y-big-cursor, body.a11y-big-cursor * { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M8 4l16 12-7 1 4 9-3 1-4-9-6 5z' fill='%2322d3ee' stroke='%23000' stroke-width='1.5'/%3E%3C/svg%3E") 0 0, auto !important; }
+    body.a11y-no-anim *, body.a11y-no-anim *::before, body.a11y-no-anim *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+    body.a11y-links a:not(.btn-primary):not(.btn-secondary):not(.nav-cta):not(.nav-logo) {
+      text-decoration: underline !important;
+      text-underline-offset: 4px !important;
+    }
+
     /* ── Cookie Banner ── */
     #cookie-banner {
       position: fixed;
@@ -1522,6 +1681,73 @@
   </div>
 </section>
 
+<!-- ACCESSIBILITY WIDGET -->
+<button id="a11y-btn" aria-label="תפריט נגישות" aria-expanded="false" aria-controls="a11y-panel">
+  <img src="accessibility.png" alt="" width="26" height="26" />
+</button>
+
+<div id="a11y-panel" role="dialog" aria-label="אפשרויות נגישות">
+  <div class="a11y-title">נגישות</div>
+
+  <div class="a11y-row">
+    <span class="a11y-label">
+      <svg viewBox="0 0 24 24"><path d="M2 7h5v2H2zm15 0h5v2h-5zM5 11h3v2H5zm11 0h3v2h-3zM3 15h6v2H3zm12 0h6v2h-6z"/></svg>
+      גודל טקסט
+    </span>
+    <div class="a11y-stepper">
+      <button class="a11y-step-btn" id="font-down" aria-label="הקטן טקסט">−</button>
+      <span class="a11y-step-val" id="font-val">100%</span>
+      <button class="a11y-step-btn" id="font-up" aria-label="הגדל טקסט">+</button>
+    </div>
+  </div>
+
+  <div class="a11y-row">
+    <span class="a11y-label">
+      <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18A9 9 0 0 0 12 3zm0 16.5A7.5 7.5 0 1 1 12 4.5a7.5 7.5 0 0 1 0 15zm0-13A5.5 5.5 0 1 0 12 17a5.5 5.5 0 0 0 0-11z"/></svg>
+      ניגודיות גבוהה
+    </span>
+    <label class="a11y-toggle">
+      <input type="checkbox" id="toggle-contrast" />
+      <span class="a11y-slider"></span>
+    </label>
+  </div>
+
+  <div class="a11y-row">
+    <span class="a11y-label">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h10v2H4z"/></svg>
+      הדגשת קישורים
+    </span>
+    <label class="a11y-toggle">
+      <input type="checkbox" id="toggle-links" />
+      <span class="a11y-slider"></span>
+    </label>
+  </div>
+
+  <div class="a11y-row">
+    <span class="a11y-label">
+      <svg viewBox="0 0 24 24"><path d="M13 2l4.5 11H14v9l-4.5-11H13V2z"/></svg>
+      סמן גדול
+    </span>
+    <label class="a11y-toggle">
+      <input type="checkbox" id="toggle-cursor" />
+      <span class="a11y-slider"></span>
+    </label>
+  </div>
+
+  <div class="a11y-row">
+    <span class="a11y-label">
+      <svg viewBox="0 0 24 24"><path d="M13 3v9h6l-7 9V12H6l7-9z"/></svg>
+      עצור אנימציות
+    </span>
+    <label class="a11y-toggle">
+      <input type="checkbox" id="toggle-anim" />
+      <span class="a11y-slider"></span>
+    </label>
+  </div>
+
+  <button class="a11y-reset" id="a11y-reset">↺ איפוס הגדרות</button>
+</div>
+
 <!-- COOKIE BANNER -->
 <div id="cookie-banner" role="dialog" aria-label="הסכמה לעוגיות">
   <div class="cookie-icon">🍪</div>
@@ -1589,6 +1815,83 @@
   </div>
 </footer>
 
+
+<script>
+(function() {
+  var btn    = document.getElementById('a11y-btn');
+  var panel  = document.getElementById('a11y-panel');
+  var body   = document.body;
+  var STORE  = 'a11y-prefs';
+
+  // Load saved prefs
+  var prefs = JSON.parse(localStorage.getItem(STORE) || '{}');
+  var fontSize = prefs.fontSize || 100;
+
+  function applyAll() {
+    // Font size
+    body.style.fontSize = fontSize === 100 ? '' : (fontSize / 100) + 'rem';
+    document.getElementById('font-val').textContent = fontSize + '%';
+    // Toggles
+    body.classList.toggle('a11y-high-contrast', !!prefs.contrast);
+    body.classList.toggle('a11y-links',          !!prefs.links);
+    body.classList.toggle('a11y-big-cursor',     !!prefs.cursor);
+    body.classList.toggle('a11y-no-anim',        !!prefs.noAnim);
+    // Sync checkboxes
+    document.getElementById('toggle-contrast').checked = !!prefs.contrast;
+    document.getElementById('toggle-links').checked    = !!prefs.links;
+    document.getElementById('toggle-cursor').checked   = !!prefs.cursor;
+    document.getElementById('toggle-anim').checked     = !!prefs.noAnim;
+  }
+
+  function save() { localStorage.setItem(STORE, JSON.stringify(prefs)); }
+
+  applyAll();
+
+  // Prevent panel clicks from bubbling to document
+  panel.addEventListener('click', function(e) { e.stopPropagation(); });
+
+  // Toggle panel
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var open = panel.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function(e) {
+    if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== btn) {
+      panel.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Font size
+  document.getElementById('font-up').addEventListener('click', function() {
+    if (fontSize >= 150) return;
+    fontSize += 10; prefs.fontSize = fontSize; save(); applyAll();
+  });
+  document.getElementById('font-down').addEventListener('click', function() {
+    if (fontSize <= 80) return;
+    fontSize -= 10; prefs.fontSize = fontSize; save(); applyAll();
+  });
+
+  // Toggles
+  function bindToggle(id, key) {
+    document.getElementById(id).addEventListener('change', function() {
+      prefs[key] = this.checked; save(); applyAll();
+    });
+  }
+  bindToggle('toggle-contrast', 'contrast');
+  bindToggle('toggle-links',    'links');
+  bindToggle('toggle-cursor',   'cursor');
+  bindToggle('toggle-anim',     'noAnim');
+
+  // Reset
+  document.getElementById('a11y-reset').addEventListener('click', function() {
+    prefs = {}; fontSize = 100; save(); applyAll();
+  });
+})();
+</script>
 
 <script>
 (function() {
